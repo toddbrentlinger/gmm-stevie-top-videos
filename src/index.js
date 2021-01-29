@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import stevieVideoArr from './data/gmmStevieVideoListSorted.json';
 
+// Sort video list
 stevieVideoArr.sort((first, second) => {
     // If comments are equal, sort by likes
     return (first.comments === second.comments)
