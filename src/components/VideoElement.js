@@ -1,6 +1,7 @@
 import React from 'react';
 import { addCommasToNumber } from '../utility.js';
 import './VideoElement.css';
+import CommentList from './CommentList.js';
 
 function VideoElement(props) {
     function createSrcSet() {
@@ -23,9 +24,9 @@ function VideoElement(props) {
                     >
                         <img
                             srcSet={createSrcSet()}
-                            src={props.videoObj.thumbnails.standard.url}
-                            width={props.videoObj.thumbnails.standard.width}
-                            height={props.videoObj.thumbnails.standard.height}
+                            src={props.videoObj.thumbnails.default.url}
+                            width={props.videoObj.thumbnails.default.width}
+                            height={props.videoObj.thumbnails.default.height}
                             alt={`YouTube thumbnail for video ID: ${props.videoObj.videoId}`}
                         />
                     </a>
@@ -36,16 +37,7 @@ function VideoElement(props) {
                 <div className="total-likes">{`Total Likes: ${addCommasToNumber(props.videoObj.totalLikes)}`}</div>
                 <div className="total-replies">{`Total Replies: ${addCommasToNumber(props.videoObj.totalReplies)}`}</div>
             </div>
-            <div className="comment-list-container">
-                <h3>Top Stevie Comments:</h3>
-                <ol>
-                    <li className="comment-container">
-                        <div className="comment">{props.videoObj.comments[0].comment}</div>
-                        <div className="comment-likes">{`Likes: ${addCommasToNumber(props.videoObj.comments[0].likes)}`}</div>
-                        <div className="comment-replies">{`Replies: ${addCommasToNumber(props.videoObj.comments[0].replies)}`}</div>
-                    </li>
-                </ol>
-            </div>
+            <CommentList comments={props.videoObj.comments} />
         </li>
     );
 }
