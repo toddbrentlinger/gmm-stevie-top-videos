@@ -6,8 +6,9 @@ import CommentList from './CommentList.js';
 function VideoElement(props) {
     function createSrcSet() {
         let srcSet = "";
-        for (let i = props.videoObj.thumbnails.length - 1; i >= 0; i--) {
-            srcSet += `${props.videoObj.thumbnails[i].url} ${props.videoObj.thumbnails[i].width}w`;
+        const thumbnailKeys = Object.keys(props.videoObj.thumbnails);
+        for (let i = thumbnailKeys.length - 1; i >= 0; i--) {
+            srcSet += `${props.videoObj.thumbnails[thumbnailKeys[i]].url} ${props.videoObj.thumbnails[thumbnailKeys[i]].width}w`;
             if (i >= 0)
                 srcSet += ", ";
         }

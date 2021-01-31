@@ -1,6 +1,6 @@
 import React from 'react';
 import parse from 'html-react-parser';
-import AccordionButton from './AccordionButton.js';
+import Accordion from './Accordion.js';
 import { addCommasToNumber } from '../utility.js';
 
 function Comment(props) {
@@ -30,10 +30,9 @@ function CommentList(props) {
 
     return (
         <div className="comment-list-container">
-            <AccordionButton>
-                Top Stevie Comments:
-            </AccordionButton>
-            <ol>{commentComponentArr}</ol>
+            <Accordion title="Top Stevie Comments:">
+                <ol>{commentComponentArr}</ol>
+            </Accordion>
         </div>
     );
 }
