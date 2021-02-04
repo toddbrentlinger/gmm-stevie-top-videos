@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import stevieVideoArr from './data/gmmStevieVideoListSorted.json';
 
-// Sort video list
+// ---------- Sort video list ----------
+
 stevieVideoArr.sort((first, second) => {
     // If comments are equal, sort by likes
     return (first.comments === second.comments)
@@ -13,9 +14,13 @@ stevieVideoArr.sort((first, second) => {
         : second.comments - first.comments;
 });
 
+// ---------- React Render ----------
+
 ReactDOM.render(
     <React.StrictMode>
-        <App videoList={stevieVideoArr} />
+        <App
+            videoList={stevieVideoArr}
+        />
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -1,0 +1,7 @@
+.App-footer {
+    background-color: var(--main-bg-color);
+    display: flex;
+    justify-content: center;
+    color: var(--main-text-color);
+    padding: 1em 05em;
+}

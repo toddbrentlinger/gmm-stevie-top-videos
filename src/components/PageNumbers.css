@@ -1,0 +1,8 @@
+.page-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.page-button-container button {
+    padding: .5em;
+}

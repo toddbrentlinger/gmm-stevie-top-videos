@@ -1,7 +1,15 @@
+.App {
+    max-width: 1000px;
+    margin: auto;
+    background-color: var(--secondary-bg-color);
+    border-right: 2px solid var(--secondary-bg-color);
+    border-left: 2px solid var(--secondary-bg-color);
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: var(--main-bg-color);
   text-align: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--main-text-color);
   padding: 1em;
 }

@@ -10,7 +10,7 @@ function Accordion(props) {
             isActive ?
                 panelRef.current.scrollHeight + "px" :
                 null;
-    });
+    }, [isActive]);
 
     return (
         <div className="accordion-container">

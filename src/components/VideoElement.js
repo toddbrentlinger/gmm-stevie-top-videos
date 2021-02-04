@@ -7,9 +7,9 @@ function VideoElement(props) {
     function createSrcSet() {
         let srcSet = "";
         const thumbnailKeys = Object.keys(props.videoObj.thumbnails);
-        for (let i = thumbnailKeys.length - 1; i >= 0; i--) {
+        for (let i = 0; i < thumbnailKeys.length; i++) {
             srcSet += `${props.videoObj.thumbnails[thumbnailKeys[i]].url} ${props.videoObj.thumbnails[thumbnailKeys[i]].width}w`;
-            if (i >= 0)
+            if (i < thumbnailKeys.length - 1)
                 srcSet += ", ";
         }
         return srcSet;

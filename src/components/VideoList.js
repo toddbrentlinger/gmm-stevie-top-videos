@@ -17,7 +17,12 @@ function VideoList(props) {
     }
 
     return (
-        <ol>{displayedVideoElements}</ol>
+        <ol
+            className="video-list"
+            start={start + 1}
+        >
+            {displayedVideoElements}
+        </ol>
     );
 }
 

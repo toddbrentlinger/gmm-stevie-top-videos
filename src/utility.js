@@ -12,3 +12,11 @@ export function addCommasToNumber(num) {
     } else // Else return the num as is
         return num;
 }
+
+export function debounce(func, delay) {
+    let debounceTimer;
+    return function () {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
+    };
+}
