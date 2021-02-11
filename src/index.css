@@ -1,12 +1,23 @@
 :root {
-    --main-text-color: #f6f6f6; /* nearly pure white */
-    --main-bg-color: #282c34;
-
-    --secondary-text-color: #282c34;
-    --secondary-bg-color: #f4f4f4; /* nearly pure white */
-
+    /* Main Color Set */
+    --main-text-color: #f6f6f6; /* nearly pure white: f6f6f6 */
+    --main-bg-color: #007965;
+    --main-bg-hover-color: #00947B; /* dark bg color */
+    --main-bg-select-color: #00af91; /* darker bg color */
+    --main-bg-active-color: #00af91; /* darkest bg color */
+    --main-shadow-color: rgba(0,0,0,0.6); /* black */
+    /* Second Color Set Orange: ffcc29 */
+    --second-text-color: #282c34;
+    --second-bg-color: #f4f4f4; /* nearly pure white */
+    /* Third Color Set */
     --third-text-color: #3a3a3a; /* nearly pure black */
     --third-bg-color: #f6f6f6; /* nearly pure white */
+}
+
+/* Misc */
+/* prevent IE9 (and earlier) from displaying a border around the edge of img */
+img {
+    border: 0;
 }
 
 body {

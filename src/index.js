@@ -9,9 +9,9 @@ import stevieVideoArr from './data/gmmStevieVideoListSorted.json';
 
 stevieVideoArr.sort((first, second) => {
     // If comments are equal, sort by likes
-    return (first.comments === second.comments)
-        ? second.likes - first.likes
-        : second.comments - first.comments;
+    return (first.totalComments === second.totalComments)
+        ? second.totalCommentLikes - first.totalCommentLikes
+        : second.totalComments - first.totalComments;
 });
 
 // ---------- React Render ----------

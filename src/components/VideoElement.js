@@ -15,6 +15,10 @@ function VideoElement(props) {
         return srcSet;
     }
 
+    function getLikePercentage(likes, dislikes) {
+        return ( (likes / (likes + dislikes)) * 100 ).toFixed(1);
+    }
+
     return (
         <li>
             <div className="video-data-container">
@@ -25,6 +29,7 @@ function VideoElement(props) {
                     >
                         <img
                             srcSet={createSrcSet()}
+                            sizes="50vw"
                             src={props.videoObj.thumbnails.default.url}
                             width={props.videoObj.thumbnails.default.width}
                             height={props.videoObj.thumbnails.default.height}
@@ -34,9 +39,18 @@ function VideoElement(props) {
                 </div>
                 <h2 className="title">{props.videoObj.title}</h2>
                 <p className="description">{props.videoObj.description.split("\n")[0]}</p>
-                <div className="total-comments">{`Total Stevie Comments: ${addCommasToNumber(props.videoObj.totalComments)}`}</div>
-                <div className="total-likes">{`Total Likes: ${addCommasToNumber(props.videoObj.totalLikes)}`}</div>
-                <div className="total-replies">{`Total Replies: ${addCommasToNumber(props.videoObj.totalReplies)}`}</div>
+                <div className="video-data">
+                    <div className="video-views">{`Views: ${addCommasToNumber(props.videoObj.viewCount)}`}</div>
+                    <div className="video-likes">
+                        {`Likes: ${addCommasToNumber(props.videoObj.likeCount)} (${getLikePercentage(props.videoObj.likeCount, props.videoObj.dislikeCount)}%)`}
+                    </div>
+                </div>
+                <hr/>
+                <div className="comments-data">
+                    <div className="total-comments">{`Total Stevie Comments: ${addCommasToNumber(props.videoObj.totalComments)}`}</div>
+                    <div className="total-likes">{`Total Likes: ${addCommasToNumber(props.videoObj.totalCommentLikes)}`}</div>
+                    <div className="total-replies">{`Total Replies: ${addCommasToNumber(props.videoObj.totalCommentReplies)}`}</div>
+                </div>
             </div>
             <CommentList comments={props.videoObj.comments} />
         </li>

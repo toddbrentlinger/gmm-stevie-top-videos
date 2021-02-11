@@ -2,13 +2,18 @@ import React from 'react';
 import parse from 'html-react-parser';
 import Accordion from './Accordion.js';
 import { addCommasToNumber } from '../utility.js';
+import ReplyList from './ReplyList.js';
 
 function Comment(props) {
     return (
         <li className="comment-container">
             <div className="comment">{parse(props.comment)}</div>
+            <div className="comment-author">{`Author: ${props.author}`}</div>
             <div className="comment-likes">{`Likes: ${addCommasToNumber(props.likes)}`}</div>
-            <div className="comment-replies">{`Replies: ${addCommasToNumber(props.replies)}`}</div>
+            <div className="comment-replies">{`Replies: ${addCommasToNumber(props.replyCount)}`}</div>
+            <ReplyList
+                replies={props.replies}
+            />
         </li>
     );
 }
@@ -20,9 +25,12 @@ function CommentList(props) {
             commentComponentArr.push(
                 <Comment
                     key={index}
-                    comment={commentObj.comment}
-                    likes={commentObj.likes}
+                    comment={commentObj.topLevelComment}
+                    author={commentObj.authorName}
+                    likes={commentObj.likeCount}
+                    replyCount={commentObj.replyCount}
                     replies={commentObj.replies}
+
                 />
             );
         });

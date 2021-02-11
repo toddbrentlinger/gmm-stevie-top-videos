@@ -1,9 +1,9 @@
 .App {
     max-width: 1000px;
     margin: auto;
-    background-color: var(--secondary-bg-color);
-    border-right: 2px solid var(--secondary-bg-color);
-    border-left: 2px solid var(--secondary-bg-color);
+    background-color: var(--second-bg-color);
+    border-right: 2px solid var(--second-bg-color);
+    border-left: 2px solid var(--second-bg-color);
 }
 
 .App-header {
