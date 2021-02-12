@@ -3,23 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import stevieVideoArr from './data/gmmStevieVideoListSorted.json';
+//import stevieVideoArr from './data/gmmStevieVideoListSorted.json';
 
 // ---------- Sort video list ----------
-
+/*
 stevieVideoArr.sort((first, second) => {
     // If comments are equal, sort by likes
     return (first.totalComments === second.totalComments)
         ? second.totalCommentLikes - first.totalCommentLikes
         : second.totalComments - first.totalComments;
 });
+*/
 
 // ---------- React Render ----------
 
 ReactDOM.render(
     <React.StrictMode>
         <App
-            videoList={stevieVideoArr}
+            //videoList={stevieVideoArr}
         />
     </React.StrictMode>,
     document.getElementById('root')
