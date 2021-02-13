@@ -99,8 +99,8 @@ function PageNumbers(props) {
         }
         return numberedPageButtons;
     }
-    
-    return (
+
+    const pageButtonContainerTemplate = (
         <div className="page-button-container">
             <button
                 className="custom-button"
@@ -119,7 +119,7 @@ function PageNumbers(props) {
                 // OR current page is near beginning of list
                 disabled={
                     getLastPageNum() <= numDisplayedButtons ||
-                        props.currPage <= getMiddleButton()
+                    props.currPage <= getMiddleButton()
                 }
                 type="button"
                 value="first"
@@ -136,7 +136,7 @@ function PageNumbers(props) {
                 // OR current page is near end of list
                 disabled={
                     getLastPageNum() <= numDisplayedButtons ||
-                        props.currPage >= getLastPageNum() - getMiddleButton() + 1
+                    props.currPage >= getLastPageNum() - getMiddleButton() + 1
                 }
                 type="button"
                 value="last"
@@ -155,6 +155,8 @@ function PageNumbers(props) {
             </button>
         </div>
     );
+
+    return (props.maxResults ? pageButtonContainerTemplate : null);
 }
 
 export default PageNumbers;

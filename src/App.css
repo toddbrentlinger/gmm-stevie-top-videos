@@ -4,12 +4,16 @@
     background-color: var(--second-bg-color);
     border-right: 2px solid var(--second-bg-color);
     border-left: 2px solid var(--second-bg-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .App-header {
-  background-color: var(--main-bg-color);
-  text-align: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--main-text-color);
-  padding: 1em;
+    background-color: var(--main-bg-color);
+    text-align: center;
+    font-size: calc(10px + 2vmin);
+    color: var(--main-text-color);
+    padding: 1em;
 }
