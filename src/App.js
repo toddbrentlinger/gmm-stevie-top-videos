@@ -1,12 +1,138 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 //import axios from 'axios';
 //import logo from './logo.svg';
 import './App.css';
 import VideoList from './components/VideoList.js';
 import PageNumbers from './components/PageNumbers.js';
 import FooterCustom from './components/FooterCustom.js';
+/*
+const initialState = {
+    'gmm': {'display': false, 'data': []},
+    'gmmore': { 'display': false, 'data': []}
+};
 
-function App(props) {
+function getPromiseFromFetchOfJSON(url) {
+    return fetch(url,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+    ).then((response) => response.json());
+}
+
+async function reducer(state, action) {
+    switch (action) {
+        case 'gmm':
+            // Check if need to fetch
+            if (!state.gmm.data.length) {
+                await fetch('./data/gmmStevieVideoListSorted.json',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    }
+                ).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    console.log("Get GMM videos");
+                    return {
+                        'gmm': { 'display': true, 'data': data },
+                        'gmmore': { 'display': false, 'data': state.gmmore.data }
+                    };
+                });
+                break;
+            } else {
+                return {
+                    'gmm': { 'display': true, 'data': state.gmm.data },
+                    'gmmore': { 'display': false, 'data': state.gmmore.data }
+                };
+            }
+
+        case 'gmmore':
+            // Check if need to fetch
+            if (!state.gmmore.data.length) {
+                await fetch('./data/gmMoreStevieVideoListSorted.json',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    }
+                ).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    console.log("Get GMMore videos");
+                    return {
+                        'gmm': { 'display': false, 'data': state.gmm.data },
+                        'gmmore': { 'display': true, 'data': data }
+                    };
+                });
+                break;
+            } else {
+                return {
+                    'gmm': { 'display': false, 'data': state.gmm.data },
+                    'gmmore': { 'display': true, 'data': state.gmmore.data }
+                };
+            }
+
+        case 'both':
+            // Check if need to fetch
+            if (!state.gmm.data.length || !state.gmmore.data.length) {
+                let promiseArr = [];
+                if (!state.gmm.data.length) {
+                    promiseArr.push(
+                        getPromiseFromFetchOfJSON('./data/gmmStevieVideoListSorted.json')
+                    );
+                } else {
+                    promiseArr.push(null);
+                }
+                if (!state.gmmore.data.length) {
+                    promiseArr.push(
+                        getPromiseFromFetchOfJSON('./data/gmMoreStevieVideoListSorted.json')
+                    );
+                } else {
+                    promiseArr.push(null);
+                }
+                await Promise.all(promiseArr).then(dataArr => {
+                    // If GMM & GMMore data is fetched
+                    if (dataArr[0] && dataArr[1]) {
+                        return {
+                            'gmm': { 'display': true, 'data': dataArr[0] },
+                            'gmmore': { 'display': true, 'data': dataArr[1] }
+                        };
+                    }
+                    // Else If only GMM data is fetched
+                    else if (dataArr[0]) {
+                        return {
+                            'gmm': { 'display': true, 'data': dataArr[0] },
+                            'gmmore': { 'display': true, 'data': state.gmmore.data }
+                        };
+                    }
+                    // Else If only GMMore data is fetched
+                    else if (dataArr[1]) {
+                        return {
+                            'gmm': { 'display': true, 'data': state.gmm.data },
+                            'gmmore': { 'display': true, 'data': dataArr[1] }
+                        };
+                    }
+                });
+                break;
+            } else {
+                return {
+                    'gmm': { 'display': true, 'data': state.gmm.data },
+                    'gmmore': { 'display': true, 'data': state.gmmore.data }
+                };
+            }
+
+        default:
+            return state;
+    }
+}
+*/
+function App() {
     const [displayedChannels, setDisplayedChannels] = useState({
         'gmm': true,
         'gmmore': false,
@@ -15,6 +141,7 @@ function App(props) {
         'gmm': [],
         'gmmore': [],
     });
+    //const [dataState, dataDispatch] = useReducer(reducer, initialState);
     const [videoList, setVideoList] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [resultsPerPage, setResultsPerPage] = useState(10);
@@ -30,56 +157,10 @@ function App(props) {
         ).then((response) => response.json());
     }
 
-    function getVideoDataNew() {
-        setVideoData(prevVideoData => {
-            console.log('prevVideoData:');
-            console.log(prevVideoData);
-            let promiseArr = [];
-            let newVideoData;
-            if (displayedChannels.gmm && !prevVideoData.gmm.length) {
-                promiseArr.push(
-                    getPromiseFromFetchOfJSON('./data/gmmStevieVideoListSorted.json')
-                );
-            } else {
-                promiseArr.push(null);
-            }
-            if (displayedChannels.gmmore && !prevVideoData.gmmore.length) {
-                promiseArr.push(
-                    getPromiseFromFetchOfJSON('./data/gmMoreStevieVideoListSorted.json')
-                );
-            } else {
-                promiseArr.push(null);
-            }
-            Promise.all(promiseArr).then(dataArr => {
-                // If GMM & GMMore data is fetched
-                if (dataArr[0] && dataArr[1]) {
-                    newVideoData = {
-                        'gmm': dataArr[0],
-                        'gmmore': dataArr[1]
-                    };
-                }
-                // Else If only GMM data is fetched
-                else if (dataArr[0]) {
-                    newVideoData = {
-                        ...prevVideoData,
-                        'gmm': dataArr[0],
-                    };
-                }
-                // Else If only GMMore data is fetched
-                else if (dataArr[1]) {
-                    newVideoData = {
-                        ...prevVideoData,
-                        'gmmore': dataArr[1],
-                    };
-                }
-                console.log('newVideoData: ');
-                console.log(newVideoData);
-                return newVideoData;
-            });
-        });
-    }
-
     function getVideoData() {
+        console.log('getVideoData has started');
+        console.log(`displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }`);
+        console.log(`videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`);
         let promiseArr = [];
         if (displayedChannels.gmm && !videoData.gmm.length) {
             promiseArr.push(
@@ -117,7 +198,10 @@ function App(props) {
                     'gmmore': dataArr[1],
                 });
             }
+
+            createVideoList();
         });
+        console.log('getVideoData has ended');
         
         /*
         // Good Mythical Morning
@@ -177,20 +261,14 @@ function App(props) {
         }
         */
     }
-
-    useEffect(createVideoList, [videoData, displayedChannels]);
-
-    useEffect(getVideoData, [displayedChannels]);
-
+    
     // TODO: Convert to videoList useState and/or useEffect that only changes
     // when displayedChannels changes or videoData changes
     // ISSUE: Runs with each page change
     function createVideoList() {
         console.log('createVideoList() has started');
-        console.log('displayedChannels:');
-        console.log(displayedChannels);
-        console.log('videoData:');
-        console.log(videoData);
+        console.log(`displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }`);
+        console.log(`videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`);
         let newVideoList = [];
         if (displayedChannels.gmm)
             newVideoList = newVideoList.concat(videoData.gmm);
@@ -204,7 +282,11 @@ function App(props) {
         });
         setVideoList(newVideoList);
         console.log('createVideoList() has ended');
+        //return newVideoList;
     }
+
+    useEffect(getVideoData, [displayedChannels]);
+    //useEffect(createVideoList, [displayedChannels]);
 
     return (
         <div className="App">
