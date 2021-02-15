@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 //import axios from 'axios';
 //import logo from './logo.svg';
 import './App.css';
@@ -7,8 +7,8 @@ import PageNumbers from './components/PageNumbers.js';
 import FooterCustom from './components/FooterCustom.js';
 /*
 const initialState = {
-    'gmm': {'display': false, 'data': []},
-    'gmmore': { 'display': false, 'data': []}
+    'display': { 'gmm': false, 'gmmore': false },
+    'data': { 'gmm': [], 'gmmore': [] }
 };
 
 function getPromiseFromFetchOfJSON(url) {
@@ -23,113 +23,106 @@ function getPromiseFromFetchOfJSON(url) {
 }
 
 async function reducer(state, action) {
+    console.log('reducer started');
+    console.log('state:');
+    console.log(state);
+    console.log(`action: ${action}`);
+    let newState;
     switch (action) {
         case 'gmm':
             // Check if need to fetch
-            if (!state.gmm.data.length) {
-                await fetch('./data/gmmStevieVideoListSorted.json',
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    }
-                ).then(function (response) {
-                    return response.json();
-                }).then(function (data) {
+            if (!state.data.gmm.length) {
+                await getPromiseFromFetchOfJSON(
+                    './data/gmmStevieVideoListSorted.json'
+                ).then(function (data) {
                     console.log("Get GMM videos");
-                    return {
-                        'gmm': { 'display': true, 'data': data },
-                        'gmmore': { 'display': false, 'data': state.gmmore.data }
+                    newState = {
+                        'display': { 'gmm': true, 'gmmore': false },
+                        'data': { 'gmm': data, 'gmmore': state.data.gmmore }
                     };
                 });
-                break;
             } else {
-                return {
-                    'gmm': { 'display': true, 'data': state.gmm.data },
-                    'gmmore': { 'display': false, 'data': state.gmmore.data }
+                newState = {
+                    'display': { 'gmm': true, 'gmmore': false },
+                    'data': state.data
                 };
             }
+            break;
 
         case 'gmmore':
             // Check if need to fetch
-            if (!state.gmmore.data.length) {
-                await fetch('./data/gmMoreStevieVideoListSorted.json',
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    }
-                ).then(function (response) {
-                    return response.json();
-                }).then(function (data) {
+            if (!state.data.gmmore.length) {
+                await getPromiseFromFetchOfJSON(
+                    './data/gmMoreStevieVideoListSorted.json'
+                ).then(function (data) {
                     console.log("Get GMMore videos");
-                    return {
-                        'gmm': { 'display': false, 'data': state.gmm.data },
-                        'gmmore': { 'display': true, 'data': data }
+                    newState = {
+                        'display': { 'gmm': false, 'gmmore': true },
+                        'data': { 'gmm': state.data.gmm, 'gmmore': data }
                     };
                 });
-                break;
             } else {
-                return {
-                    'gmm': { 'display': false, 'data': state.gmm.data },
-                    'gmmore': { 'display': true, 'data': state.gmmore.data }
+                newState = {
+                    'display': { 'gmm': false, 'gmmore': true },
+                    'data': state.data
                 };
             }
+            break;
 
         case 'both':
             // Check if need to fetch
-            if (!state.gmm.data.length || !state.gmmore.data.length) {
+            if (!state.data.gmm.length || !state.data.gmmore.length) {
                 let promiseArr = [];
-                if (!state.gmm.data.length) {
+                if (!state.data.gmm.length) {
                     promiseArr.push(
-                        getPromiseFromFetchOfJSON('./data/gmmStevieVideoListSorted.json')
+                        await getPromiseFromFetchOfJSON('./data/gmmStevieVideoListSorted.json')
                     );
                 } else {
                     promiseArr.push(null);
                 }
-                if (!state.gmmore.data.length) {
+                if (!state.data.gmmore.length) {
                     promiseArr.push(
-                        getPromiseFromFetchOfJSON('./data/gmMoreStevieVideoListSorted.json')
+                        await getPromiseFromFetchOfJSON('./data/gmMoreStevieVideoListSorted.json')
                     );
                 } else {
                     promiseArr.push(null);
                 }
-                await Promise.all(promiseArr).then(dataArr => {
+                Promise.all(promiseArr).then(dataArr => {
+                    let newDataObj;
                     // If GMM & GMMore data is fetched
                     if (dataArr[0] && dataArr[1]) {
-                        return {
-                            'gmm': { 'display': true, 'data': dataArr[0] },
-                            'gmmore': { 'display': true, 'data': dataArr[1] }
-                        };
+                        newDataObj = { 'gmm': dataArr[0], 'gmmore': dataArr[1] };
                     }
                     // Else If only GMM data is fetched
                     else if (dataArr[0]) {
-                        return {
-                            'gmm': { 'display': true, 'data': dataArr[0] },
-                            'gmmore': { 'display': true, 'data': state.gmmore.data }
-                        };
+                        newDataObj = { ...state.data, 'gmm': dataArr[0] };
                     }
                     // Else If only GMMore data is fetched
                     else if (dataArr[1]) {
-                        return {
-                            'gmm': { 'display': true, 'data': state.gmm.data },
-                            'gmmore': { 'display': true, 'data': dataArr[1] }
-                        };
+                        newDataObj = { ...state.data, 'gmmore': dataArr[1] };
                     }
+                    else {
+                        newDataObj = { ...state.data };
+                    }
+                    newState = {
+                        'display': { 'gmm': true, 'gmmore': true },
+                        'data': newDataObj
+                    };
                 });
-                break;
             } else {
-                return {
-                    'gmm': { 'display': true, 'data': state.gmm.data },
-                    'gmmore': { 'display': true, 'data': state.gmmore.data }
+                newState = {
+                    'display': { 'gmm': true, 'gmmore': true },
+                    'data': state.data
                 };
             }
+            break;
 
         default:
-            return state;
+            newState = state;
     }
+    console.log('newState:');
+    console.log(newState);
+    return newState;
 }
 */
 function App() {
@@ -158,9 +151,12 @@ function App() {
     }
 
     function getVideoData() {
-        console.log('getVideoData has started');
-        console.log(`displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }`);
-        console.log(`videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`);
+        console.log(
+            'getVideoData has started\n',
+            'Initial State Values:\n',
+            `displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }\n`,
+            `videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`
+        );
         let promiseArr = [];
         if (displayedChannels.gmm && !videoData.gmm.length) {
             promiseArr.push(
@@ -177,32 +173,17 @@ function App() {
             promiseArr.push(null);
         }
         Promise.all(promiseArr).then(dataArr => {
-            // If GMM & GMMore data is fetched
-            if (dataArr[0] && dataArr[1]) {
-                setVideoData({
-                    'gmm': dataArr[0],
-                    'gmmore': dataArr[1]
-                });
-            }
-            // Else If only GMM data is fetched
-            else if (dataArr[0]) {
-                setVideoData({
-                    ...videoData,
-                    'gmm': dataArr[0],
-                });
-            }
-            // Else If only GMMore data is fetched
-            else if (dataArr[1]) {
-                setVideoData({
-                    ...videoData,
-                    'gmmore': dataArr[1],
-                });
-            }
-
-            createVideoList();
+            setVideoData(prevVideoData => {
+                const newVideoData = {
+                    'gmm': dataArr[0] ? dataArr[0] : prevVideoData.gmm,
+                    'gmmore': dataArr[1] ? dataArr[1] : prevVideoData.gmmore,
+                };
+                console.log('Promise.all inside getVideoData has ended');
+                createVideoList(newVideoData);
+                return newVideoData;
+            });
         });
-        console.log('getVideoData has ended');
-        
+
         /*
         // Good Mythical Morning
         if (displayedChannels.gmm && !videoData.gmm.length) {
@@ -261,12 +242,38 @@ function App() {
         }
         */
     }
-    
+
+    function createVideoList(newVideoData) {
+        console.log(
+            'createVideoList() has started\n',
+            'Parameter:\n',
+            `newVideoData: { gmm: ${newVideoData.gmm.length} gmmore: ${newVideoData.gmmore.length} }\n`,
+            'Initial State Values:\n',
+            `displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }\n`,
+            `videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`
+        );
+        let newVideoList = [];
+        if (displayedChannels.gmm)
+            newVideoList = newVideoList.concat(newVideoData.gmm);
+        if (displayedChannels.gmmore)
+            newVideoList = newVideoList.concat(newVideoData.gmmore);
+        newVideoList.sort((first, second) => {
+            // If comments are equal, sort by likes
+            return (first.totalComments === second.totalComments)
+                ? second.totalCommentLikes - first.totalCommentLikes
+                : second.totalComments - first.totalComments;
+        });
+        setVideoList(newVideoList);
+        console.log('createVideoList() has ended');
+        //return newVideoList;
+    }
+    /*
     // TODO: Convert to videoList useState and/or useEffect that only changes
     // when displayedChannels changes or videoData changes
     // ISSUE: Runs with each page change
-    function createVideoList() {
+    function createVideoListOld() {
         console.log('createVideoList() has started');
+        console.log('Initial State Values:');
         console.log(`displayedChannels: { gmm: ${displayedChannels.gmm} gmmore: ${displayedChannels.gmmore} }`);
         console.log(`videoData: { gmm: ${videoData.gmm.length} gmmore: ${videoData.gmmore.length} }`);
         let newVideoList = [];
@@ -284,7 +291,9 @@ function App() {
         console.log('createVideoList() has ended');
         //return newVideoList;
     }
+    */
 
+    //const videoList = createVideoList();
     useEffect(getVideoData, [displayedChannels]);
     //useEffect(createVideoList, [displayedChannels]);
 
@@ -296,9 +305,11 @@ function App() {
             >
                 GMM Stevie Top Videos
             </header>
-            <div>
+            <div id="channel-select-btn-container">
                 <button
-                    onClick={() => {
+                    className={"custom-button" + (displayedChannels.gmm && !displayedChannels.gmmore ? " active" : "")}
+                    onClick={(e) => {
+                        e.preventDefault();
                         setDisplayedChannels({
                             'gmm': true,
                             'gmmore': false,
@@ -307,7 +318,9 @@ function App() {
                     }}
                 >GMM</button>
                 <button
-                    onClick={() => {
+                    className={"custom-button" + (!displayedChannels.gmm && displayedChannels.gmmore ? " active" : "")}
+                    onClick={(e) => {
+                        e.preventDefault();
                         setDisplayedChannels({
                             'gmm': false,
                             'gmmore': true,
@@ -316,7 +329,9 @@ function App() {
                     }}
                 >GMMore</button>
                 <button
-                    onClick={() => {
+                    className={"custom-button" + (displayedChannels.gmm && displayedChannels.gmmore ? " active" : "")}
+                    onClick={(e) => {
+                        e.preventDefault();
                         setDisplayedChannels({
                             'gmm': true,
                             'gmmore': true,
@@ -325,11 +340,11 @@ function App() {
                     }}
                 >Both</button>
             </div>
-            <div>
+            <div hidden={true}>
                 <div>GMM Displayed: {displayedChannels.gmm ? "TRUE" : "FALSE"}</div>
-                <div>GMM Videos Saved: {videoData.gmm.length}</div>
+                <div>GMM Videos Saved: {videoData ? videoData.gmm.length : videoData}</div>
                 <div>GMMore Displayed: {displayedChannels.gmmore ? "TRUE" : "FALSE"}</div>
-                <div>GMMore Videos Saved: {videoData.gmmore.length}</div>
+                <div>GMMore Videos Saved: {videoData ? videoData.gmmore.length : videoData}</div>
             </div>
             <PageNumbers
                 currPage={currPage}

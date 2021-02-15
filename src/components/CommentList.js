@@ -11,9 +11,7 @@ function Comment(props) {
             <div className="comment-author">{`Author: ${props.author}`}</div>
             <div className="comment-likes">{`Likes: ${addCommasToNumber(props.likes)}`}</div>
             <div className="comment-replies">{`Replies: ${addCommasToNumber(props.replyCount)}`}</div>
-            <ReplyList
-                replies={props.replies}
-            />
+            {(props.replies.length) ? <ReplyList replies={props.replies} /> : null}
         </li>
     );
 }

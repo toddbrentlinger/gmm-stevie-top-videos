@@ -17,3 +17,26 @@
     color: var(--main-text-color);
     padding: 1em;
 }
+
+#channel-select-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+#channel-select-btn-container button {
+    flex: 1;
+    border-radius: 0;
+    border-top: 2px solid var(--second-bg-color);
+    border-bottom: 2px solid var(--second-bg-color);
+    padding: 1em;
+    font-weight: 600;
+}
+
+#channel-select-btn-container button:not(:first-child) {
+    border-left: 2px solid var(--second-bg-color);
+}
+
+#channel-select-btn-container button.active {
+    background-image: none;
+    background-color: var(--main-bg-active-color);
+}
