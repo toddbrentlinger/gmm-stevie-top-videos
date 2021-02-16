@@ -18,9 +18,12 @@
     padding: 1em;
 }
 
+/** Channel Select Buttons */
+
 #channel-select-btn-container {
     display: flex;
     justify-content: center;
+    padding-top: .6em;
 }
 
 #channel-select-btn-container button {
@@ -34,9 +37,22 @@
 
 #channel-select-btn-container button:not(:first-child) {
     border-left: 2px solid var(--second-bg-color);
+    margin-left: .6em;
 }
 
 #channel-select-btn-container button.active {
     background-image: none;
     background-color: var(--main-bg-active-color);
+}
+
+/** Sort */
+
+#sort-main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#sort-container select {
+    margin-left: .5em;
 }

@@ -297,6 +297,13 @@ function App() {
     useEffect(getVideoData, [displayedChannels]);
     //useEffect(createVideoList, [displayedChannels]);
 
+    function handleDisplayedVideosMessage() {
+        const start = (currPage - 1) * resultsPerPage;
+        const end = Math.min(start + resultsPerPage, videoList.length);
+
+        return `Showing ${start + 1} - ${end} of ${videoList.length} videos`;
+    }
+
     return (
         <div className="App">
             <header
@@ -352,6 +359,28 @@ function App() {
                 setCurrPage={setCurrPage}
                 maxResults={videoList.length} //props.videoList.length
             />
+            <div id="sort-main">
+                <div id="number-displayed-container">
+                    {handleDisplayedVideosMessage()}
+                </div>
+                <div id="sort-container">
+                    <label htmlFor="max-displayed-select">
+                        Per Page:
+                        <select
+                            name="max-displayed"
+                            id="max-displayed-select"
+                            value={resultsPerPage}
+                            onChange={(e) => { setResultsPerPage(parseInt(e.target.value, 10)); }}
+                        >
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
             <VideoList
                 videoList={videoList} //props.videoList
                 currPage={currPage}

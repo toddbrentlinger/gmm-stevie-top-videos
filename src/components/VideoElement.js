@@ -19,6 +19,14 @@ function VideoElement(props) {
         return ( (likes / (likes + dislikes)) * 100 ).toFixed(1);
     }
 
+    function createPublishedDateString(dateStr_ISO_8601) {
+        const months = [
+            'Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+        ];
+        const tempDate = new Date(dateStr_ISO_8601);
+        return `${months[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getFullYear()}`;
+    }
+
     return (
         <li>
             <div className="video-data-container">
@@ -39,6 +47,7 @@ function VideoElement(props) {
                 </div>
                 <h2 className="title">{props.videoObj.title}</h2>
                 <p className="description">{props.videoObj.description.split("\n")[0]}</p>
+                <div className="published-date">{`Published: ${createPublishedDateString(props.videoObj.publishedAt)}`}</div>
                 <div className="video-data">
                     <div className="video-views">{`Views: ${addCommasToNumber(props.videoObj.viewCount)}`}</div>
                     <div className="video-likes">

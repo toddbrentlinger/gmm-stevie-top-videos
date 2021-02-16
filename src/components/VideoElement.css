@@ -3,6 +3,11 @@
     flex-wrap: wrap;*/
 }
 
+.video-data-container h2 {
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+}
+
 .thumbnail-container {
     width: 50%;
     float: left;

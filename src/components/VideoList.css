@@ -1,5 +1,6 @@
 .video-list {
     flex: 1 1 auto;
+    margin: 0;
 }
 
 .video-list > li {
