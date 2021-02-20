@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/gmm-stevie-top-videos/static/css/main.c37233b0.chunk.css",
-    "main.js": "/gmm-stevie-top-videos/static/js/main.f67a01ca.chunk.js",
-    "main.js.map": "/gmm-stevie-top-videos/static/js/main.f67a01ca.chunk.js.map",
-    "runtime-main.js": "/gmm-stevie-top-videos/static/js/runtime-main.afddb155.js",
-    "runtime-main.js.map": "/gmm-stevie-top-videos/static/js/runtime-main.afddb155.js.map",
-    "static/js/2.608bfe67.chunk.js": "/gmm-stevie-top-videos/static/js/2.608bfe67.chunk.js",
-    "static/js/2.608bfe67.chunk.js.map": "/gmm-stevie-top-videos/static/js/2.608bfe67.chunk.js.map",
-    "static/js/3.0420534b.chunk.js": "/gmm-stevie-top-videos/static/js/3.0420534b.chunk.js",
-    "static/js/3.0420534b.chunk.js.map": "/gmm-stevie-top-videos/static/js/3.0420534b.chunk.js.map",
+    "main.css": "/gmm-stevie-top-videos/static/css/main.199941e0.chunk.css",
+    "main.js": "/gmm-stevie-top-videos/static/js/main.07568fee.chunk.js",
+    "main.js.map": "/gmm-stevie-top-videos/static/js/main.07568fee.chunk.js.map",
+    "runtime-main.js": "/gmm-stevie-top-videos/static/js/runtime-main.cfff20dd.js",
+    "runtime-main.js.map": "/gmm-stevie-top-videos/static/js/runtime-main.cfff20dd.js.map",
+    "static/js/2.4699a541.chunk.js": "/gmm-stevie-top-videos/static/js/2.4699a541.chunk.js",
+    "static/js/2.4699a541.chunk.js.map": "/gmm-stevie-top-videos/static/js/2.4699a541.chunk.js.map",
+    "static/js/3.4b7be354.chunk.js": "/gmm-stevie-top-videos/static/js/3.4b7be354.chunk.js",
+    "static/js/3.4b7be354.chunk.js.map": "/gmm-stevie-top-videos/static/js/3.4b7be354.chunk.js.map",
     "index.html": "/gmm-stevie-top-videos/index.html",
-    "static/css/main.c37233b0.chunk.css.map": "/gmm-stevie-top-videos/static/css/main.c37233b0.chunk.css.map",
-    "static/js/2.608bfe67.chunk.js.LICENSE.txt": "/gmm-stevie-top-videos/static/js/2.608bfe67.chunk.js.LICENSE.txt"
+    "static/css/main.199941e0.chunk.css.map": "/gmm-stevie-top-videos/static/css/main.199941e0.chunk.css.map",
+    "static/js/2.4699a541.chunk.js.LICENSE.txt": "/gmm-stevie-top-videos/static/js/2.4699a541.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.afddb155.js",
-    "static/js/2.608bfe67.chunk.js",
-    "static/css/main.c37233b0.chunk.css",
-    "static/js/main.f67a01ca.chunk.js"
+    "static/js/runtime-main.cfff20dd.js",
+    "static/js/2.4699a541.chunk.js",
+    "static/css/main.199941e0.chunk.css",
+    "static/js/main.07568fee.chunk.js"
   ]
 }
