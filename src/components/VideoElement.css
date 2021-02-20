@@ -3,9 +3,11 @@
     flex-wrap: wrap;*/
 }
 
-.video-data-container h2 {
+.video-data-container .title {
     background-color: var(--main-bg-color);
     color: var(--main-text-color);
+    margin: 0;
+    padding: 0.5em;
 }
 
 .thumbnail-container {

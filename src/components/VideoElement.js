@@ -30,6 +30,7 @@ function VideoElement(props) {
     return (
         <li>
             <div className="video-data-container">
+                <h2 className="title">{`${props.index + 1}. | ${props.videoObj.title}`}</h2>
                 <div className="thumbnail-container">
                     <a href={"https://www.youtube.com/watch?v=" + props.videoObj.videoId}
                         target="_blank"
@@ -45,7 +46,6 @@ function VideoElement(props) {
                         />
                     </a>
                 </div>
-                <h2 className="title">{props.videoObj.title}</h2>
                 <p className="description">{props.videoObj.description.split("\n")[0]}</p>
                 <div className="published-date">{`Published: ${createPublishedDateString(props.videoObj.publishedAt)}`}</div>
                 <div className="video-data">

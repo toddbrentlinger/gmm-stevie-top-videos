@@ -5,6 +5,7 @@ import './App.css';
 import VideoList from './components/VideoList.js';
 import PageNumbers from './components/PageNumbers.js';
 import FooterCustom from './components/FooterCustom.js';
+import IsLoading from './components/IsLoading.js';
 /*
 const initialState = {
     'display': { 'gmm': false, 'gmmore': false },
@@ -138,6 +139,7 @@ function App() {
     const [videoList, setVideoList] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [resultsPerPage, setResultsPerPage] = useState(10);
+    const [isLoading, setIsLoading] = useState(true);
 
     function getPromiseFromFetchOfJSON(url) {
         return fetch(url,
@@ -159,6 +161,7 @@ function App() {
         );
         let promiseArr = [];
         if (displayedChannels.gmm && !videoData.gmm.length) {
+            setIsLoading(true);
             promiseArr.push(
                 getPromiseFromFetchOfJSON('./data/gmmStevieVideoListSorted.json')
             );
@@ -166,6 +169,7 @@ function App() {
             promiseArr.push(null);
         }
         if (displayedChannels.gmmore && !videoData.gmmore.length) {
+            setIsLoading(true);
             promiseArr.push(
                 getPromiseFromFetchOfJSON('./data/gmMoreStevieVideoListSorted.json')
             );
@@ -182,6 +186,7 @@ function App() {
                 createVideoList(newVideoData);
                 return newVideoData;
             });
+            setIsLoading(false);
         });
 
         /*
@@ -304,6 +309,51 @@ function App() {
         return `Showing ${start + 1} - ${end} of ${videoList.length} videos`;
     }
 
+    const mainContent = (
+        <main>
+            <PageNumbers
+                currPage={currPage}
+                resultsPerPage={resultsPerPage}
+                setCurrPage={setCurrPage}
+                maxResults={videoList.length} //props.videoList.length
+            />
+            <div id="sort-main">
+                <div id="number-displayed-container">
+                    {handleDisplayedVideosMessage()}
+                </div>
+                <div id="sort-container">
+                    <label htmlFor="max-displayed-select">
+                        Per Page:
+                        <select
+                            name="max-displayed"
+                            id="max-displayed-select"
+                            value={resultsPerPage}
+                            onChange={(e) => { setResultsPerPage(parseInt(e.target.value, 10)); }}
+                        >
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <VideoList
+                videoList={videoList} //props.videoList
+                currPage={currPage}
+                resultsPerPage={resultsPerPage}
+            />
+            <PageNumbers
+                currPage={currPage}
+                resultsPerPage={resultsPerPage}
+                setCurrPage={setCurrPage}
+                maxResults={videoList.length} //props.videoList.length
+                scrollToTop={true}
+            />
+        </main>
+    );
+
     return (
         <div className="App">
             <header
@@ -353,46 +403,7 @@ function App() {
                 <div>GMMore Displayed: {displayedChannels.gmmore ? "TRUE" : "FALSE"}</div>
                 <div>GMMore Videos Saved: {videoData ? videoData.gmmore.length : videoData}</div>
             </div>
-            <PageNumbers
-                currPage={currPage}
-                resultsPerPage={resultsPerPage}
-                setCurrPage={setCurrPage}
-                maxResults={videoList.length} //props.videoList.length
-            />
-            <div id="sort-main">
-                <div id="number-displayed-container">
-                    {handleDisplayedVideosMessage()}
-                </div>
-                <div id="sort-container">
-                    <label htmlFor="max-displayed-select">
-                        Per Page:
-                        <select
-                            name="max-displayed"
-                            id="max-displayed-select"
-                            value={resultsPerPage}
-                            onChange={(e) => { setResultsPerPage(parseInt(e.target.value, 10)); }}
-                        >
-                            <option>5</option>
-                            <option>10</option>
-                            <option>25</option>
-                            <option>50</option>
-                            <option>100</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-            <VideoList
-                videoList={videoList} //props.videoList
-                currPage={currPage}
-                resultsPerPage={resultsPerPage}
-            />
-            <PageNumbers
-                currPage={currPage}
-                resultsPerPage={resultsPerPage}
-                setCurrPage={setCurrPage}
-                maxResults={videoList.length} //props.videoList.length
-                scrollToTop={true}
-            />
+            {isLoading ? <IsLoading /> : mainContent}
             <FooterCustom />
         </div>
     );

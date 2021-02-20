@@ -11,6 +11,7 @@ function VideoList(props) {
         displayedVideoElements.push(
             <VideoElement
                 key={i}
+                index={i}
                 videoObj={props.videoList[i]}
             />
         );
